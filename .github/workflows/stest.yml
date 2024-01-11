@@ -1,0 +1,33 @@
+name: Docker STest
+
+on:
+  push:
+    branches:
+        - main
+
+jobs:
+  build:
+    runs-on: ubuntu latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up .net
+        uses: actions/setup-dotnet
+        with:
+            dotnet-version: '6.x'
+
+      - name: Restore and build
+        run: |
+          dotnet restore
+          dotnet build
+
+      - name: Login to Dockerhub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t kingu13/test4 .
+          docker push kingu13/test
+
