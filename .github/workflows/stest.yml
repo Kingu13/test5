@@ -29,5 +29,5 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker build -t kingu13/test4 .
-          docker push kingu13/test
+          docker push kingu13/test4
 
